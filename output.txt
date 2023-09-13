@@ -1,0 +1,428 @@
+1) 
+
+GET => /api/v1/surveys
+
+Description:
+This API allows users to get all the survey list
+
+Request Format:
+The endpoint doesnot expect anything
+
+Response Format:
+ the API responds with a JSON object containing a success message and the list of surveys
+
+Example Response:
+{
+    "success": true,
+    "surveys": [
+        {
+    "survey_name": "survey1",
+    "questions": [
+      {
+        "ques_no": "1",
+        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      },
+      {
+        "ques_no": "2",
+        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      },
+      {
+        "ques_no": "3",
+        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      },
+      {
+        "ques_no": "4",
+        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      },
+      {
+        "ques_no": "5",
+        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      },
+      ........
+    ]
+}
+
+
+2)
+POST => /api/v1/create/survey
+
+Description:
+This API allows users to create a survey
+
+Request Format:
+It expects a body containg survey name and array of questions
+
+{
+  "survey_name": "survey2",
+  "questions": [
+    {
+      "ques_no": "1",
+      "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    },
+    {
+      "ques_no": "2",
+      "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    },
+    {
+      "ques_no": "3",
+      "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    },
+    {
+      "ques_no": "4",
+      "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    },
+    {
+      "ques_no": "5",
+      "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+    },
+    .....
+
+  ]
+}
+
+
+Response Format:
+The API responds with a JSON object containing a success message
+
+Example Response:
+//success
+{
+    "success": true,
+    "message": "successfully created"
+}
+
+//if it has a survey with same name
+{
+    "success": false,
+    "message": "The name is already exists"
+}
+
+
+3)
+POST => /api/v1/submit
+
+Description:
+This API allows users to submit a response to a survey
+
+Request Format:
+It expects a body containg survey name and candidate name and array of options with question no
+
+{
+    "survey_name": "servey1",
+    "user_name":"ddhgtwrwera",
+    "options": [
+      {
+        "ques_no": 1,
+        "opt_no": 1
+      },
+      {
+        "ques_no": 2,
+        "opt_no": 2
+      },
+      {
+        "ques_no": 3,
+        "opt_no": 7
+      },
+      {
+        "ques_no": 4,
+        "opt_no": 8
+      },
+      {
+        "ques_no": 5,
+        "opt_no": 1
+      },
+      ....
+    ]
+  }
+
+Response Format:
+The API responds with a JSON object containing a success message
+
+Example Response:
+{
+    "success": true,
+    "message": "Successfully submitted"
+}
+
+4)
+POST => /api/v1/similarity
+
+Description:
+This API allows users to find similarity between options choosen by candidates
+
+Request Format:
+It expects a optional url parameters containg name, searchtext, page and limit
+
+Example Response:
+
+nothing passed ->
+{
+    "success": true,
+    "similarity": [
+        {
+            "john": {
+                "ankan": "dissimilar",
+                "ram": "dissimilar",
+                "shaam": "dissimilar",
+                "doe": "dissimilar",
+                "dodae": "dissimilar",
+                "dodsae": "dissimilar",
+                "dadssa": "dissimilar",
+                "daasfadssa": "dissimilar",
+                "ddhga": "dissimilar",
+                "ddhgtwera": "dissimilar",
+                "ddhgtwrwera": "dissimilar"
+            }
+        },
+        {
+            "ankan": {
+                "john": "dissimilar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "ram": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "shaam": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        ......
+    ]
+}
+
+name passed(ankan)->
+{
+    "success": true,
+    "filtered_list": [
+        {
+            "ankan": {
+                "john": "dissimilar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        }
+    ]
+}
+
+searchtext passed(Johnddhga) ->
+{
+    "success": true,
+    "candidates_similarity": [
+        {
+            "john": {
+                "ddhga": "dissimilar"
+            }
+        },
+        {
+            "ddhga": {
+                "john": "dissimilar"
+            }
+        }
+    ]
+}
+
+page and limit passed -> 
+page 1->
+{
+    "success": true,
+    "similarity": [
+        {
+            "john": {
+                "ankan": "dissimilar",
+                "ram": "dissimilar",
+                "shaam": "dissimilar",
+                "doe": "dissimilar",
+                "dodae": "dissimilar",
+                "dodsae": "dissimilar",
+                "dadssa": "dissimilar",
+                "daasfadssa": "dissimilar",
+                "ddhga": "dissimilar",
+                "ddhgtwera": "dissimilar",
+                "ddhgtwrwera": "dissimilar"
+            }
+        },
+        {
+            "ankan": {
+                "john": "dissimilar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "ram": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "shaam": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "doe": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        }
+    ]
+}
+
+page 2->
+{
+    "success": true,
+    "similarity": [
+        {
+            "dodae": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "dodsae": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "dadssa": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "daasfadssa": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "ddhga": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        },
+        {
+            "ddhga": {
+                "john": "dissimilar",
+                "ankan": "100% similar",
+                "ram": "100% similar",
+                "shaam": "100% similar",
+                "doe": "100% similar",
+                "dodae": "100% similar",
+                "dodsae": "100% similar",
+                "dadssa": "100% similar",
+                "daasfadssa": "100% similar",
+                "ddhgtwera": "100% similar",
+                "ddhgtwrwera": "100% similar"
+            }
+        }
+    ]
+}
