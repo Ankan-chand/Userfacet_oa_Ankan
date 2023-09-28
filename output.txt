@@ -145,7 +145,7 @@ Example Response:
 }
 
 4)
-POST => /api/v1/similarity
+GET => /api/v1/similarity
 
 Description:
 This API allows users to find similarity between options choosen by candidates

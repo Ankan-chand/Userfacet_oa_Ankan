@@ -24,80 +24,27 @@ exports.findSimilarity = (surveydata) => {
 
 const calculateSimilarity = (data1, data2) => {
   const totalQuestions = data1.length;
-  let matchingCount = 0;
-
+  let counter = 0;
+  let similarity = 0;
   for (let i = 0; i < totalQuestions; i++) {
-    if (data1[i].opt_no === data2[i].opt_no) {
-      matchingCount++;
-    }
+
+    if(data1[i].opt_no === "" || data2[i].opt_no === "")
+      continue;
+
+    similarity += (Math.abs(data1[i].opt_no - data2[i].opt_no))*10; 
+    counter++;
+
   }
 
-  const percentage = (matchingCount / totalQuestions) * 100;
+  const percentage = similarity / counter;
 
-  if (percentage === 100) {
+  if (percentage === 0) {
     return "100% similar";
-  } else if (percentage > 75) {
+  } else if (percentage < 25) {
     return "similarity is very high";
-  } else if (percentage > 50) {
+  } else if (percentage < 50) {
     return "not very similar";
   } else {
     return "dissimilar";
   }
 }
-
-
-
-// const a = findSimilarity([{
-//     "survey_name": "survey1",
-//     "user_name": "john",
-//     "options": [
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 5 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 2 },
-//       { "ques_no": 1, "opt_no": 8 },
-//       { "ques_no": 1, "opt_no": 3 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 1 },
-//       { "ques_no": 1, "opt_no": 5 },
-//       { "ques_no": 1, "opt_no": 4 },
-//       { "ques_no": 1, "opt_no": 6 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 3 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 4 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 2 }
-//     ]
-//   },{
-//     "survey_name": "survey1",
-//     "user_name": "johns",
-//     "options": [
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 5 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 3 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 8 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 10 },
-//       { "ques_no": 1, "opt_no": 1 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 9},
-//       { "ques_no": 1, "opt_no": 5 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 2 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 4 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 7 },
-//       { "ques_no": 1, "opt_no": 2 }
-//     ]
-//   }
-//   ])
-
-//   console.log(a);

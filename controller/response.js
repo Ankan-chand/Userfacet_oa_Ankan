@@ -14,8 +14,24 @@ exports.submitResponse = async (req, res, next) => {
     //creating the response object
     const data = new Response(survey_name, user_name, options);
 
+    let newResponse = [];
     //reading the response file
     let responseData = await fs.readFile("data/response.json", "utf-8");
+    
+    if(!responseData.length){
+      newResponse.push(data);
+      console.log("newResponse");
+
+      //writing the updated array of response
+      await fs.writeFile("data/response.json", JSON.stringify(newResponse));
+      
+      return res.status(200).json({
+        success: true,
+        message: "Successfully submitted",
+      });
+      
+    }
+    
     let responses = JSON.parse(responseData);
 
     //pushing the response object into existing array of responses
